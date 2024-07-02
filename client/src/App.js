@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
 import Posts from "./components/posts/posts";
 import Forms from "./components/forms/forms";
@@ -9,6 +9,7 @@ import { getPosts } from "./actions/posts";
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [currentId, setCurrentId] = useState(0);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -36,11 +37,11 @@ const App = () => {
           >
             <Grid item xs={12} sm={7}>
               <>
-                <Posts></Posts>
+                <Posts setCurrentId={setCurrentId}></Posts>
               </>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Forms />
+              <Forms currentId={currentId} setCurrentId={setCurrentId} />
             </Grid>
           </Grid>
         </Container>
