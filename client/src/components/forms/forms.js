@@ -21,6 +21,7 @@ const Forms = ({ currentId, setCurrentId }) => {
     if (post) setPostData(post);
   }, [post]);
   const dispatch = useDispatch();
+
   const clear = () => {
     setCurrentId(0);
     setPostData({
