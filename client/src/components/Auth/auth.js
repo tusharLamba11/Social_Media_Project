@@ -30,7 +30,7 @@ const SignUp = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const classes = useStyles();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -46,9 +46,9 @@ const SignUp = () => {
     e.preventDefault();
 
     if (isSignup) {
-      dispatch(signup(form, history));
+      dispatch(signup(form, navigate));
     } else {
-      dispatch(signin(form, history));
+      dispatch(signin(form, navigate));
     }
   };
 
@@ -59,15 +59,22 @@ const SignUp = () => {
     try {
       dispatch({ type: AUTH, data: { result, token } });
 
-      history.push("/");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const googleError = () =>
-    alert("Google Sign In was unsuccessful. Try again later");
+  const googleError = (error) => {
+    console.error("Google Sign-In Error:", error);
 
+    // Detailed error message
+    if (error.error) {
+      alert(`Google Sign In failed: ${error.error}`);
+    } else {
+      alert("Google Sign In was unsuccessful. Try again later.");
+    }
+  };
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
